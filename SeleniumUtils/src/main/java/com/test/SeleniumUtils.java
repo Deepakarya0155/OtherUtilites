@@ -8,7 +8,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.remote.CapabilityType;
 
 public class SeleniumUtils {
 	
@@ -19,6 +21,9 @@ public class SeleniumUtils {
 		System.setProperty(driverProp, driverpath);
 		
 		if(driverProp.equals("webdriver.chrome.driver")) {
+			
+	
+			
 			driver=new ChromeDriver();
 			
 		}else if(driverProp.equals("webdriver.edge.driver")) {
@@ -30,7 +35,7 @@ public class SeleniumUtils {
 			driver.get(url);
 		}
 		
-		return Optional.of(driver);
+		return Optional.ofNullable(driver);
 	}
 	
 	
@@ -80,6 +85,25 @@ public class SeleniumUtils {
 		}
 		
 		return Optional.of(element);
+	}
+	public static  Optional<WebElement> findElement(By by,WebDriver driver) throws InterruptedException{
+		WebElement element=null;
+		Boolean flag=true;
+		Integer temp=1;
+		while(flag) {
+			try {
+				element = driver.findElement(by);
+				if(element==null) {
+					throw new Exception();
+				}
+				flag=false;
+			}catch(Exception e) {
+				System.out.println("Exception "+ by);
+				Thread.sleep(1000*temp);
+			}
+		}
+		
+		return Optional.ofNullable(element);
 	}
 	
 	public static  Optional<List<WebElement>> findElements(By by,WebDriver driver,Integer retry) throws InterruptedException{
