@@ -93,4 +93,15 @@ public class FileUtils {
 			}
 			return ls;
 	}
+	
+	public static List<String[]> readCSVFile(File file) {
+		
+		List<String[]> ls=null;
+		try(CSVReader reader=new CSVReader(new FileReader(file))){
+			ls=reader.readAll();
+		}catch(Exception e) {
+			System.out.println("Exception while file reading...");
+		}
+		return ls;
+	}
 }
