@@ -1,4 +1,4 @@
-package com.file;
+package com.arya.file;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
