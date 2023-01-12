@@ -19,11 +19,11 @@ import com.opencsv.CSVWriter;
 public class FileUtils {
 	
 	
-	public static void main(String...args) throws IOException {
-		String[] data=new String[] {"Deepak","Arya"};
-		writeCSVFile("data.csv", Arrays.asList(data,data));
-		readCSVFile("data.csv").forEach(S->{System.out.println(S[0]+" : "+S[1]);});
-	}
+//	public static void main(String...args) throws IOException {
+//		String[] data=new String[] {"Deepak","Arya"};
+//		writeCSVFile("data.csv", Arrays.asList(data,data));
+//		readCSVFile("data.csv").forEach(S->{System.out.println(S[0]+" : "+S[1]);});
+//	}
 		
 	
 	public static Optional<List<String>> readFile(String pathWithFile) throws IOException{
