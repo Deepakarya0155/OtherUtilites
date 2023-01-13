@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +18,8 @@ import java.util.logging.Logger;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 
 public class FileUtils {
 	
@@ -104,4 +109,35 @@ public class FileUtils {
 		}
 		return ls;
 	}
+	
+	public static List<String[]> readCSVFile(InputStream inpuStream) {
+		List<String[]> ls=null;
+		try(CSVReader reader=new CSVReader(new InputStreamReader(inpuStream))){
+			ls=reader.readAll();
+		}catch(Exception e) {
+			System.out.println("Exception while file reading...");
+		}
+		return ls;
+	}
+	
+	
+	public static <T> Optional<List<T>> readCSVtoBean(InputStream inputSteam,Class<T> cls) {
+		
+		List<T> ls=null;
+		
+		CsvToBean<T> ctb=null;
+		try (InputStreamReader reader=new InputStreamReader(inputSteam)){
+			ctb=new CsvToBeanBuilder<T>(reader)
+					.withType(cls).build();
+			
+			ls=new ArrayList<>();
+			ctb.forEach(ls::add);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Optional.ofNullable(ls);
+	}
+	
 }
